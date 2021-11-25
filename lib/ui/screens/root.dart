@@ -20,10 +20,26 @@ class _RootState extends State<Root> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
-          VerticalIconButton(icon: Icons.home, label: 'Accueil'),
-          VerticalIconButton(icon: Icons.video_library, label: 'Nouveau'),
-          VerticalIconButton(icon: Icons.send, label: 'Bientôt'),
-          VerticalIconButton(icon: Icons.search, label: 'Recherche'),
+          VerticalIconButton(
+            icon: Icons.home,
+            label: 'Accueil',
+            index: 0,
+          ),
+          VerticalIconButton(
+            icon: Icons.video_library,
+            label: 'Nouveau',
+            index: 1,
+          ),
+          VerticalIconButton(
+            icon: Icons.send,
+            label: 'Bientôt',
+            index: 2,
+          ),
+          VerticalIconButton(
+            icon: Icons.search,
+            label: 'Recherche',
+            index: 3,
+          ),
         ],
       ),
     );
