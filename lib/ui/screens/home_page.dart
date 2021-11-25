@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:netflix_clone/models/movie.dart';
 import 'package:netflix_clone/repositories/data_provider.dart';
 import 'package:netflix_clone/services/api_service.dart';
+import 'package:netflix_clone/ui/widgets/movie_card.dart';
+import 'package:netflix_clone/ui/widgets/movie_category.dart';
 import 'package:netflix_clone/utils/constant.dart';
 import 'package:provider/provider.dart';
 
@@ -32,110 +34,29 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: kBackgroundColor,
       body: ListView(
         children: [
-          Container(
-            color: Colors.red,
+          SizedBox(
             height: 500,
-            child: dataProvider.popularMovies.isEmpty
-                ? const Center()
-                : Image.network(
-                    dataProvider.popularMovies[0].posterURL(),
-                    fit: BoxFit.cover,
-                  ),
-          ),
-          const SizedBox(height: 15),
-          Text(
-            'Tendances actuelles',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            child: MovieCard(
+              movie: dataProvider.popularMovies.first,
             ),
           ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 160,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Colors.yellow,
-                  ),
-                  width: 110,
-                  child: dataProvider.popularMovies.isEmpty
-                      ? Center(
-                          child: Text(index.toString()),
-                        )
-                      : Image.network(
-                          dataProvider.popularMovies[index].posterURL(),
-                          fit: BoxFit.cover,
-                        ),
-                );
-              },
-            ),
+          MovieCategory(
+            imageHeight: 160,
+            imageWidth: 110,
+            label: 'Tendances actuelles',
+            movieList: dataProvider.popularMovies,
           ),
-          const SizedBox(height: 15),
-          Text(
-            'Les séries qui cartonnent',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+          MovieCategory(
+            imageHeight: 320,
+            imageWidth: 220,
+            label: 'Les séries qui cartonnent',
+            movieList: dataProvider.popularMovies,
           ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 320,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Colors.blue,
-                  ),
-                  width: 160,
-                  child: Center(
-                    child: Text(index.toString()),
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 15),
-          Text(
-            'Actuellement au cinéma',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 160,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Colors.green,
-                  ),
-                  width: 110,
-                  child: Center(
-                    child: Text(index.toString()),
-                  ),
-                );
-              },
-            ),
+          MovieCategory(
+            imageHeight: 160,
+            imageWidth: 110,
+            label: 'Actuellement au cinéma',
+            movieList: dataProvider.popularMovies,
           ),
         ],
       ),
