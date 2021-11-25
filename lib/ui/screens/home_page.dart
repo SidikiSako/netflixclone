@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 500,
             child: MovieCard(
-              movie: dataProvider.popularMovies.first,
+              movie: dataProvider.nowPlaying.first,
             ),
           ),
           MovieCategory(
@@ -45,12 +45,13 @@ class _HomePageState extends State<HomePage> {
             movieList: dataProvider.popularTVShows,
             callback: dataProvider.getPopularTVShows,
           ),
-          // MovieCategory(
-          //   imageHeight: 160,
-          //   imageWidth: 110,
-          //   label: 'Actuellement au cinéma',
-          //   movieList: dataProvider.popularMovies,
-          // ),
+          MovieCategory(
+            imageHeight: 160,
+            imageWidth: 110,
+            label: 'Actuellement au cinéma',
+            movieList: dataProvider.nowPlaying,
+            callback: dataProvider.getNowPlaying,
+          ),
         ],
       ),
     );

@@ -41,17 +41,7 @@ class APIService {
         'page': page,
       },
     );
-    if (response.statusCode == 200) {
-      Map _data = response.data;
-
-      List<Movie> movies = _data['results'].map<Movie>((movideJson) {
-        return Movie.fromJson(movideJson);
-      }).toList();
-
-      return movies;
-    } else {
-      throw response;
-    }
+    return reformatJsonList(response);
   }
 
   Future<List<Movie>> getPopularTVShows({required int page}) async {
@@ -61,16 +51,30 @@ class APIService {
         'page': page,
       },
     );
-    if (response.statusCode == 200) {
-      Map _data = response.data;
+    return reformatJsonList(response);
+  }
 
-      List<Movie> movies = _data['results'].map<Movie>((movideJson) {
-        return Movie.fromJson(movideJson);
-      }).toList();
+  Future<List<Movie>> getNowPlaying({required int page}) async {
+    Response response = await getData(
+      '/movie/now_playing',
+      params: {
+        'page': page,
+      },
+    );
+    return reformatJsonList(response);
+  }
+}
 
-      return movies;
-    } else {
-      throw response;
-    }
+List<Movie> reformatJsonList(Response response) {
+  if (response.statusCode == 200) {
+    Map _data = response.data;
+
+    List<Movie> movies = _data['results'].map<Movie>((movideJson) {
+      return Movie.fromJson(movideJson);
+    }).toList();
+
+    return movies;
+  } else {
+    throw response;
   }
 }
