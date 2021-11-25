@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:netflix_clone/models/movie.dart';
 import 'package:netflix_clone/repositories/data_provider.dart';
-import 'package:netflix_clone/services/api_service.dart';
 import 'package:netflix_clone/ui/widgets/movie_card.dart';
 import 'package:netflix_clone/ui/widgets/movie_category.dart';
 import 'package:netflix_clone/utils/constant.dart';
@@ -19,12 +16,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getMovies();
-  }
-
-  void getMovies() async {
-    final dataProvider = Provider.of<DataProvider>(context, listen: false);
-    await dataProvider.getPopularMovies();
   }
 
   @override
@@ -45,19 +36,20 @@ class _HomePageState extends State<HomePage> {
             imageWidth: 110,
             label: 'Tendances actuelles',
             movieList: dataProvider.popularMovies,
+            callback: dataProvider.getPopularMovies,
           ),
-          MovieCategory(
-            imageHeight: 320,
-            imageWidth: 220,
-            label: 'Les séries qui cartonnent',
-            movieList: dataProvider.popularMovies,
-          ),
-          MovieCategory(
-            imageHeight: 160,
-            imageWidth: 110,
-            label: 'Actuellement au cinéma',
-            movieList: dataProvider.popularMovies,
-          ),
+          // MovieCategory(
+          //   imageHeight: 320,
+          //   imageWidth: 220,
+          //   label: 'Les séries qui cartonnent',
+          //   movieList: dataProvider.popularMovies,
+          // ),
+          // MovieCategory(
+          //   imageHeight: 160,
+          //   imageWidth: 110,
+          //   label: 'Actuellement au cinéma',
+          //   movieList: dataProvider.popularMovies,
+          // ),
         ],
       ),
     );

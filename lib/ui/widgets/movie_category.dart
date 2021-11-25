@@ -9,12 +9,14 @@ class MovieCategory extends StatelessWidget {
   final List<Movie> movieList;
   final double imageHeight;
   final double imageWidth;
+  final Function callback;
   const MovieCategory({
     Key? key,
     required this.imageHeight,
     required this.imageWidth,
     required this.label,
     required this.movieList,
+    required this.callback,
   }) : super(key: key);
 
   @override
@@ -34,21 +36,34 @@ class MovieCategory extends StatelessWidget {
         const SizedBox(height: 5),
         SizedBox(
           height: imageHeight,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: const EdgeInsets.only(right: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                width: imageWidth,
-                child: MovieCard(
-                  movie: movieList[index],
-                ),
-              );
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              final currentPosition = notification.metrics.pixels;
+              print("CURRENTPOSITION = $currentPosition");
+              final max = notification.metrics.maxScrollExtent;
+              print("MAXEXTENT = $max");
+              if (currentPosition >= max / 2) {
+                print('FETCHING NEW DATA');
+                callback();
+              }
+              return true;
             },
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: movieList.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  width: imageWidth,
+                  child: MovieCard(
+                    movie: movieList[index],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
