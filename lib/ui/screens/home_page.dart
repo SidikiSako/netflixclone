@@ -34,16 +34,17 @@ class _HomePageState extends State<HomePage> {
           MovieCategory(
             imageHeight: 160,
             imageWidth: 110,
-            label: 'Tendances actuelles',
+            label: 'Les films les plus regardés',
             movieList: dataProvider.popularMovies,
             callback: dataProvider.getPopularMovies,
           ),
-          // MovieCategory(
-          //   imageHeight: 320,
-          //   imageWidth: 220,
-          //   label: 'Les séries qui cartonnent',
-          //   movieList: dataProvider.popularMovies,
-          // ),
+          MovieCategory(
+            imageHeight: 320,
+            imageWidth: 220,
+            label: 'Les séries qui cartonnent',
+            movieList: dataProvider.popularTVShows,
+            callback: dataProvider.getPopularTVShows,
+          ),
           // MovieCategory(
           //   imageHeight: 160,
           //   imageWidth: 110,

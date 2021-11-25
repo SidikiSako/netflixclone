@@ -52,16 +52,18 @@ class MovieCategory extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: movieList.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  width: imageWidth,
-                  child: MovieCard(
-                    movie: movieList[index],
-                  ),
-                );
+                return movieList[index].posterPath == null
+                    ? const Center()
+                    : Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        width: imageWidth,
+                        child: MovieCard(
+                          movie: movieList[index],
+                        ),
+                      );
               },
             ),
           ),

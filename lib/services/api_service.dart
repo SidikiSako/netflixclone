@@ -53,4 +53,24 @@ class APIService {
       throw response;
     }
   }
+
+  Future<List<Movie>> getPopularTVShows({required int page}) async {
+    Response response = await getData(
+      '/tv/popular',
+      params: {
+        'page': page,
+      },
+    );
+    if (response.statusCode == 200) {
+      Map _data = response.data;
+
+      List<Movie> movies = _data['results'].map<Movie>((movideJson) {
+        return Movie.fromJson(movideJson);
+      }).toList();
+
+      return movies;
+    } else {
+      throw response;
+    }
+  }
 }

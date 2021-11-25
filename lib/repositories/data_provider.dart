@@ -7,10 +7,13 @@ class DataProvider with ChangeNotifier {
   final APIService apiService = APIService();
   final List<Movie> _popularMovies = [];
   int _popularMoviePageIndex = 1;
+  final List<Movie> _popularTVShows = [];
+  int _popularTVShowsPageIndex = 1;
 
   // getters
 
   List<Movie> get popularMovies => _popularMovies;
+  List<Movie> get popularTVShows => _popularTVShows;
 
   Future<void> getPopularMovies() async {
     try {
@@ -28,7 +31,24 @@ class DataProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getPopularTVShows() async {
+    try {
+      List<Movie> movies =
+          await apiService.getPopularTVShows(page: _popularTVShowsPageIndex);
+      // on ajoute les movies récupérer à la liste des movies populaires
+      _popularTVShows.addAll(movies);
+      // on incremente la page pour la prochaine fois
+      _popularTVShowsPageIndex++;
+      // on notifie ceux qiu utilisent _popularMovies que les données ont changé
+      notifyListeners();
+    } on Response catch (response) {
+      print("Error : ${response.statusCode}");
+      rethrow;
+    }
+  }
+
   Future<void> initData() async {
     await getPopularMovies();
+    await getPopularTVShows();
   }
 }
