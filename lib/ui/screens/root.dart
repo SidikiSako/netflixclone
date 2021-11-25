@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:netflix_clone/repositories/index_provider.dart';
+import 'package:netflix_clone/ui/screens/coming_soon_page.dart';
+import 'package:netflix_clone/ui/screens/home_page.dart';
+import 'package:netflix_clone/ui/screens/most_recent_page.dart';
+import 'package:netflix_clone/ui/screens/search_page.dart';
 import 'package:netflix_clone/ui/widgets/vertical_icon_button.dart';
 import 'package:netflix_clone/utils/constant.dart';
+import 'package:provider/provider.dart';
 
 class Root extends StatefulWidget {
   const Root({Key? key}) : super(key: key);
@@ -11,7 +17,13 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
-  int _currentIndex = 0;
+  List<Widget> screens = const [
+    HomePage(),
+    MostRecentPage(),
+    CominSoonPage(),
+    SearchPage(),
+  ];
+
   Widget getBottomNavigationBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -47,8 +59,10 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
+    final indexProvider = Provider.of<IndexProvider>(context);
     return Scaffold(
         backgroundColor: kBackgroundColor,
+        body: screens[indexProvider.currentIndex],
         bottomNavigationBar: getBottomNavigationBar());
   }
 }
