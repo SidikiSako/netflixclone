@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netflix_clone/models/movie.dart';
+import 'package:netflix_clone/repositories/data_provider.dart';
 import 'package:netflix_clone/services/api_service.dart';
 import 'package:netflix_clone/utils/constant.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,23 +14,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Movie>? movies;
   @override
   void initState() {
     super.initState();
     getMovies();
   }
 
-  void getMovies() {
-    APIService().getPopularMovies(page: 1).then((movieList) {
-      setState(() {
-        movies = movieList;
-      });
-    });
+  void getMovies() async {
+    final dataProvider = Provider.of<DataProvider>(context, listen: false);
+    await dataProvider.getPopularMovies();
   }
 
   @override
   Widget build(BuildContext context) {
+    final dataProvider = Provider.of<DataProvider>(context);
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: ListView(
@@ -36,10 +35,10 @@ class _HomePageState extends State<HomePage> {
           Container(
             color: Colors.red,
             height: 500,
-            child: movies == null
+            child: dataProvider.popularMovies.isEmpty
                 ? const Center()
                 : Image.network(
-                    movies![0].posterURL(),
+                    dataProvider.popularMovies[0].posterURL(),
                     fit: BoxFit.cover,
                   ),
           ),
@@ -66,12 +65,12 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.yellow,
                   ),
                   width: 110,
-                  child: movies == null
+                  child: dataProvider.popularMovies.isEmpty
                       ? Center(
                           child: Text(index.toString()),
                         )
                       : Image.network(
-                          movies![index].posterURL(),
+                          dataProvider.popularMovies[index].posterURL(),
                           fit: BoxFit.cover,
                         ),
                 );

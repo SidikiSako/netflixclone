@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/repositories/data_provider.dart';
 import 'package:netflix_clone/repositories/index_provider.dart';
 import 'package:netflix_clone/ui/screens/root.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => IndexProvider(),
-      child: const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => IndexProvider()),
+        ChangeNotifierProvider(create: (_) => DataProvider()),
+      ],
+      builder: (context, child) => const MyApp(),
     ),
   );
+
+  // runApp(
+  //   ChangeNotifierProvider(
+  //     create: (_) => IndexProvider(),
+  //     child: const MyApp(),
+  //   ),
+  // );
 }
 
 class MyApp extends StatelessWidget {
