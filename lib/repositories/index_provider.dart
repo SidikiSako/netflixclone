@@ -7,6 +7,7 @@ class IndexProvider with ChangeNotifier {
 
   void updateCurrentIndex({required int newIdex}) {
     _currentIndex = newIdex;
+    print("currentIndex = $_currentIndex");
     notifyListeners();
   }
 }

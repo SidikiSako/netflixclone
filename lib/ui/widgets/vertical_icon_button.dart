@@ -20,25 +20,30 @@ class _VerticalIconButtonState extends State<VerticalIconButton> {
   @override
   Widget build(BuildContext context) {
     final indexProvider = Provider.of<IndexProvider>(context);
-    return Column(
-      children: [
-        Icon(
-          widget.icon,
-          color: widget.index == indexProvider.currentIndex
-              ? kPrimaryColor
-              : Colors.grey,
-          size: 25,
-        ),
-        Text(
-          widget.label,
-          style: GoogleFonts.poppins(
+    return GestureDetector(
+      onTap: () {
+        indexProvider.updateCurrentIndex(newIdex: widget.index);
+      },
+      child: Column(
+        children: [
+          Icon(
+            widget.icon,
             color: widget.index == indexProvider.currentIndex
                 ? kPrimaryColor
                 : Colors.grey,
-            fontSize: 10,
+            size: 25,
           ),
-        )
-      ],
+          Text(
+            widget.label,
+            style: GoogleFonts.poppins(
+              color: widget.index == indexProvider.currentIndex
+                  ? kPrimaryColor
+                  : Colors.grey,
+              fontSize: 10,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
