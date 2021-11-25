@@ -60,13 +60,15 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     final indexProvider = Provider.of<IndexProvider>(context);
-    return Scaffold(
-        backgroundColor: kBackgroundColor,
-        body: IndexedStack(
-          index: indexProvider.currentIndex,
-          children: screens,
-        ),
-        bottomNavigationBar: getBottomNavigationBar());
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: kBackgroundColor,
+          body: IndexedStack(
+            index: indexProvider.currentIndex,
+            children: screens,
+          ),
+          bottomNavigationBar: getBottomNavigationBar()),
+    );
   }
 }
 
