@@ -62,7 +62,10 @@ class _RootState extends State<Root> {
     final indexProvider = Provider.of<IndexProvider>(context);
     return Scaffold(
         backgroundColor: kBackgroundColor,
-        body: screens[indexProvider.currentIndex],
+        body: IndexedStack(
+          index: indexProvider.currentIndex,
+          children: screens,
+        ),
         bottomNavigationBar: getBottomNavigationBar());
   }
 }
