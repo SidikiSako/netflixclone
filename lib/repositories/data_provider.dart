@@ -28,7 +28,7 @@ class DataProvider with ChangeNotifier {
     }
   }
 
-  // Future<void> initData() async {
-  //   await getPopularMovies();
-  // }
+  Future<void> initData() async {
+    await getPopularMovies();
+  }
 }
