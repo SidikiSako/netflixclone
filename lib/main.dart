@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone/repositories/data_provider.dart';
 import 'package:netflix_clone/repositories/index_provider.dart';
 import 'package:netflix_clone/ui/screens/loading_page.dart';
-import 'package:netflix_clone/ui/screens/root.dart';
 import 'package:provider/provider.dart';
 
 void main() {

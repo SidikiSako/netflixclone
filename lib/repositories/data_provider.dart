@@ -53,7 +53,7 @@ class DataProvider with ChangeNotifier {
   Future<void> getNowPlaying() async {
     try {
       List<Movie> movies =
-          await apiService.getNowPlaying(page: _popularTVShowsPageIndex);
+          await apiService.getNowPlaying(page: _nowPlayingPageIndex);
       // on ajoute les movies récupérer à la liste des movies populaires
       _nowPlaying.addAll(movies);
       // on incremente la page pour la prochaine fois
@@ -67,8 +67,13 @@ class DataProvider with ChangeNotifier {
   }
 
   Future<void> initData() async {
-    await getPopularMovies();
-    await getPopularTVShows();
-    await getNowPlaying();
+    // await getPopularMovies();
+    // await getPopularTVShows();
+    // await getNowPlaying();
+    await Future.wait([
+      getPopularMovies(),
+      getPopularTVShows(),
+      getNowPlaying(),
+    ]);
   }
 }
