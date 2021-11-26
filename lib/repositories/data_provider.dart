@@ -66,6 +66,16 @@ class DataProvider with ChangeNotifier {
     }
   }
 
+  Future<Movie> getMovieDetails({required Movie movie}) async {
+    try {
+      Movie newMovie = await apiService.getMovieDetails(movie: movie);
+      return newMovie;
+    } on Response catch (response) {
+      print("Error : ${response.statusCode}");
+      rethrow;
+    }
+  }
+
   Future<void> initData() async {
     // await getPopularMovies();
     // await getPopularTVShows();

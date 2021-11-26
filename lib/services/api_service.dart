@@ -63,6 +63,28 @@ class APIService {
     );
     return reformatJsonList(response);
   }
+
+  Future<Movie> getMovieDetails({required Movie movie}) async {
+    Response response = await getData('/movie/${movie.id}');
+    if (response.statusCode == 200) {
+      Map<String, dynamic> _data = response.data;
+      Movie newMovie = movie.updateMovieDetails(_data);
+      return newMovie;
+    } else {
+      throw response;
+    }
+  }
+
+  Future<Movie> getTVShowDetails({required Movie movie}) async {
+    Response response = await getData('/tv/${movie.id}');
+    if (response.statusCode == 200) {
+      Map<String, dynamic> _data = response.data;
+      Movie newMovie = movie.updateMovieDetails(_data);
+      return newMovie;
+    } else {
+      throw response;
+    }
+  }
 }
 
 List<Movie> reformatJsonList(Response response) {

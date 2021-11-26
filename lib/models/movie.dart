@@ -39,6 +39,37 @@ class Movie {
     API api = API();
     return api.baseImageURL + posterPath!;
   }
+
+  Movie updateMovieDetails(Map<String, dynamic> json) {
+    var genres = json['genres'] as List;
+    List<String> genreList =
+        genres.map((item) => item['name'] as String).toList();
+    Movie movie = Movie(
+      name: name,
+      description: description,
+      posterPath: posterPath,
+      id: id,
+      releaseDate: json['release_date'] ?? json['first_air_data'],
+      vote: json['vote_average'],
+      genres: genreList,
+    );
+
+    return movie;
+  }
+
+  String reformatGenres() {
+    String _genres = '';
+    if (genres != null) {
+      for (int i = 0; i < genres!.length; i++) {
+        if (i == genres!.length - 1) {
+          _genres = _genres + genres![i];
+        } else {
+          _genres = _genres + '${genres![i]}, ';
+        }
+      }
+    }
+    return _genres;
+  }
 }
 
 // genres : []
