@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:netflix_clone/models/movie.dart';
 import 'package:netflix_clone/repositories/data_provider.dart';
 import 'package:netflix_clone/ui/widgets/action_button.dart';
+import 'package:netflix_clone/ui/widgets/casting_card.dart';
 import 'package:netflix_clone/ui/widgets/movie_info.dart';
 import 'package:netflix_clone/utils/constant.dart';
 import 'package:provider/provider.dart';
@@ -86,6 +87,27 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             fontSize: 15,
                           ),
                         ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Casting',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 350,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: _movie!.cast!.length,
+                              itemBuilder: (context, index) {
+                                return _movie!.cast![index].imageURL == null
+                                    ? const Center()
+                                    : CastingCard(person: _movie!.cast![index]);
+                              }),
+                        )
                       ],
                     ),
                   ),
