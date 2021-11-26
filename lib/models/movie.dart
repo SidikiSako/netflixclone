@@ -1,3 +1,4 @@
+import 'package:netflix_clone/models/person.dart';
 import 'package:netflix_clone/services/api.dart';
 
 class Movie {
@@ -5,12 +6,25 @@ class Movie {
   final String name;
   final String description;
   final String? posterPath;
+  final List<String>? genres;
+  final String? releaseDate;
+  final double? vote;
+  final List<String>? videos;
+  final List<String>? images;
+  final List<Person>? cast;
 
-  Movie(
-      {required this.name,
-      required this.description,
-      required this.posterPath,
-      required this.id});
+  Movie({
+    required this.name,
+    required this.description,
+    required this.posterPath,
+    required this.id,
+    this.cast,
+    this.genres,
+    this.images,
+    this.releaseDate,
+    this.videos,
+    this.vote,
+  });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
@@ -26,3 +40,5 @@ class Movie {
     return api.baseImageURL + posterPath!;
   }
 }
+
+// genres : []
