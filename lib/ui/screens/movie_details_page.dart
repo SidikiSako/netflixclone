@@ -78,6 +78,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                           icon: Icons.download,
                           label: 'Télécharger la vidéo',
                         ),
+                        const SizedBox(height: 20),
+                        Text(
+                          _movie!.description,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
                       ],
                     ),
                   ),

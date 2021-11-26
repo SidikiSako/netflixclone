@@ -33,7 +33,7 @@ class MovieInfo extends StatelessWidget {
             Text(
               movie.reformatGenres(),
               style: GoogleFonts.poppins(
-                color: Colors.white,
+                color: Colors.grey,
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),
