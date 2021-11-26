@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:netflix_clone/models/movie.dart';
+import 'package:netflix_clone/models/person.dart';
 import 'package:netflix_clone/services/api.dart';
 
 class APIService {
@@ -68,23 +69,47 @@ class APIService {
     Response response = await getData('/movie/${movie.id}');
     if (response.statusCode == 200) {
       Map<String, dynamic> _data = response.data;
-      Movie newMovie = movie.updateMovieDetails(_data);
+      var genres = _data['genres'] as List;
+      List<String> genreList =
+          genres.map((item) => item['name'] as String).toList();
+      // Movie newMovie = movie.updateMovieDetails(_data);
+      Movie newMovie = movie.copyWith(
+        vote: _data['vote_average'],
+        releaseDate: _data['release_date'],
+        genres: genreList,
+      );
+
       return newMovie;
     } else {
       throw response;
     }
   }
 
-  Future<Movie> getTVShowDetails({required Movie movie}) async {
-    Response response = await getData('/tv/${movie.id}');
+  Future<Movie> getMovieCast({required Movie movie}) async {
+    Response response = await getData('/movie/${movie.id}/credits');
     if (response.statusCode == 200) {
-      Map<String, dynamic> _data = response.data;
-      Movie newMovie = movie.updateMovieDetails(_data);
-      return newMovie;
+      Map _data = response.data;
+
+      List<Person> casting = _data['cast'].map<Person>((personJson) {
+        return Person.fromJson(personJson);
+      }).toList();
+
+      return movie.copyWith(cast: casting);
     } else {
       throw response;
     }
   }
+
+  // Future<Movie> getTVShowDetails({required Movie movie}) async {
+  //   Response response = await getData('/tv/${movie.id}');
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> _data = response.data;
+  //     Movie newMovie = movie.updateMovieDetails(_data);
+  //     return newMovie;
+  //   } else {
+  //     throw response;
+  //   }
+  // }
 }
 
 List<Movie> reformatJsonList(Response response) {
