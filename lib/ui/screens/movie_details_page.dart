@@ -8,6 +8,7 @@ import 'package:netflix_clone/ui/widgets/action_button.dart';
 import 'package:netflix_clone/ui/widgets/casting_card.dart';
 import 'package:netflix_clone/ui/widgets/movie_card.dart';
 import 'package:netflix_clone/ui/widgets/movie_info.dart';
+import 'package:netflix_clone/ui/widgets/movie_video_list.dart';
 import 'package:netflix_clone/ui/widgets/my_video_player.dart';
 import 'package:netflix_clone/utils/constant.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         flags: const YoutubePlayerFlags(
           mute: false,
           autoPlay: false,
+          hideThumbnail: true,
         ),
       );
     }
@@ -78,9 +80,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 SizedBox(
                     height: 220,
                     width: MediaQuery.of(context).size.width,
-                    child: _controller != null
-                        ? MyVideoPlayer(controller: _controller!)
-                        : Center(
+                    child: _movie!.videos!.isEmpty
+                        ? Center(
                             child: Text(
                               'Pas de vidéo',
                               style: GoogleFonts.poppins(
@@ -88,14 +89,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               ),
                             ),
                           )
-
-                    // const Center(
-                    //     child: SpinKitFadingCircle(
-                    //       color: kPrimaryColor,
-                    //       size: 20,
-                    //     ),
-                    //   ),
-                    ),
+                        : MyVideoPlayer(movieId: _movie!.videos!.first.key)),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -147,7 +141,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     ? const Center()
                                     : CastingCard(person: _movie!.cast![index]);
                               }),
-                        )
+                        ),
+
+                        MovieVideoList(movie: _movie!),
                       ],
                     ),
                   ),
