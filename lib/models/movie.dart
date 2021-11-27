@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:netflix_clone/models/person.dart';
+import 'package:netflix_clone/models/video.dart';
 import 'package:netflix_clone/services/api.dart';
 
 class Movie {
@@ -13,7 +14,7 @@ class Movie {
   final List<String>? genres;
   final String? releaseDate;
   final double? vote;
-  final List<String>? videos;
+  final List<Video>? videos;
   final List<String>? images;
   final List<Person>? cast;
 
@@ -83,7 +84,7 @@ class Movie {
     List<String>? genres,
     String? releaseDate,
     double? vote,
-    List<String>? videos,
+    List<Video>? videos,
     List<String>? images,
     List<Person>? cast,
   }) {

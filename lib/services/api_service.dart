@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:netflix_clone/models/movie.dart';
 import 'package:netflix_clone/models/person.dart';
+import 'package:netflix_clone/models/video.dart';
 import 'package:netflix_clone/services/api.dart';
 
 class APIService {
@@ -95,6 +96,21 @@ class APIService {
       }).toList();
 
       return movie.copyWith(cast: casting);
+    } else {
+      throw response;
+    }
+  }
+
+  Future<Movie> getMovieVideos({required Movie movie}) async {
+    Response response = await getData('/movie/${movie.id}/videos');
+    if (response.statusCode == 200) {
+      Map _data = response.data;
+
+      List<Video> videos = _data['results'].map<Video>((videoJson) {
+        return Video.fromJson(videoJson);
+      }).toList();
+
+      return movie.copyWith(videos: videos);
     } else {
       throw response;
     }
