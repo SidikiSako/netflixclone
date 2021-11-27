@@ -74,6 +74,8 @@ class DataProvider with ChangeNotifier {
       newMovie = await apiService.getMovieCast(movie: newMovie);
       // on recupère les videos
       newMovie = await apiService.getMovieVideos(movie: newMovie);
+      // on recupère les photos
+      newMovie = await apiService.getMovieImages(movie: newMovie);
       return newMovie;
     } on Response catch (response) {
       print("Error : ${response.statusCode}");

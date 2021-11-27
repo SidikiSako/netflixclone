@@ -143,7 +143,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               }),
                         ),
 
-                        MovieVideoList(movie: _movie!),
+                        //MovieVideoList(movie: _movie!),
                       ],
                     ),
                   ),

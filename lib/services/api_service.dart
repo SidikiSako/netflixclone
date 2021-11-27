@@ -101,6 +101,24 @@ class APIService {
     }
   }
 
+  Future<Movie> getMovieImages({required Movie movie}) async {
+    Response response = await getData('/movie/${movie.id}/images');
+    if (response.statusCode == 200) {
+      //Map _data = response.data;
+
+      Map<String, dynamic> _data = response.data;
+      var images = _data['backdrops'] as List;
+      List<String> urls =
+          images.map((item) => api.baseImageURL + item['file_path']).toList();
+
+      return movie.copyWith(
+        images: urls,
+      );
+    } else {
+      throw response;
+    }
+  }
+
   Future<Movie> getMovieVideos({required Movie movie}) async {
     Response response = await getData('/movie/${movie.id}/videos');
     if (response.statusCode == 200) {
