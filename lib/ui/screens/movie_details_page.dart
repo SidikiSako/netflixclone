@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,8 +6,10 @@ import 'package:netflix_clone/repositories/data_provider.dart';
 import 'package:netflix_clone/ui/widgets/action_button.dart';
 import 'package:netflix_clone/ui/widgets/casting_card.dart';
 import 'package:netflix_clone/ui/widgets/movie_info.dart';
+import 'package:netflix_clone/ui/widgets/my_video_player.dart';
 import 'package:netflix_clone/utils/constant.dart';
 import 'package:provider/provider.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final Movie movie;
@@ -21,6 +21,7 @@ class MovieDetailsPage extends StatefulWidget {
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
   Movie? _movie;
+  YoutubePlayerController? _controller;
   @override
   void initState() {
     super.initState();
@@ -33,6 +34,25 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
     setState(() {
       _movie = newMovie;
     });
+    initVideoPlayer();
+  }
+
+  void initVideoPlayer() {
+    //print("VIDEO ID = ${_movie!.videos!.first.key}");
+    //todo : afficher no vidéo si la vidéo n'a pas de vidéo
+    _controller = YoutubePlayerController(
+      initialVideoId: _movie!.videos!.first.key,
+      flags: const YoutubePlayerFlags(
+        mute: false,
+        autoPlay: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,6 +75,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   height: 220,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.red,
+                  child: _controller != null
+                      ? MyVideoPlayer(controller: _controller!)
+                      : const Center(
+                          child: SpinKitFadingCircle(
+                            color: kPrimaryColor,
+                            size: 20,
+                          ),
+                        ),
                 ),
                 Expanded(
                   child: Padding(
