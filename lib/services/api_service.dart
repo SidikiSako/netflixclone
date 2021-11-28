@@ -102,15 +102,22 @@ class APIService {
   }
 
   Future<Movie> getMovieImages({required Movie movie}) async {
-    Response response = await getData('/movie/${movie.id}/images');
+    Response response = await getData(
+      '/movie/${movie.id}/images',
+      params: {
+        'include_image_language': 'null',
+      },
+    );
     if (response.statusCode == 200) {
       //Map _data = response.data;
 
       Map<String, dynamic> _data = response.data;
+      //print('data = $_data');
       var images = _data['backdrops'] as List;
+      //print('images = $images');
       List<String> urls =
           images.map((item) => api.baseImageURL + item['file_path']).toList();
-
+      //print('IMAGE URLS = $urls');
       return movie.copyWith(
         images: urls,
       );

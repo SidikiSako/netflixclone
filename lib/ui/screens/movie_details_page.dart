@@ -6,6 +6,7 @@ import 'package:netflix_clone/models/movie.dart';
 import 'package:netflix_clone/repositories/data_provider.dart';
 import 'package:netflix_clone/ui/widgets/action_button.dart';
 import 'package:netflix_clone/ui/widgets/casting_card.dart';
+import 'package:netflix_clone/ui/widgets/galerie_card.dart';
 import 'package:netflix_clone/ui/widgets/movie_card.dart';
 import 'package:netflix_clone/ui/widgets/movie_info.dart';
 import 'package:netflix_clone/ui/widgets/movie_video_list.dart';
@@ -142,7 +143,29 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     : CastingCard(person: _movie!.cast![index]);
                               }),
                         ),
-
+                        const SizedBox(height: 20),
+                        Text(
+                          'Galérie',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _movie!.images!.length,
+                            itemBuilder: (context, index) {
+                              return GalerieCard(
+                                imageUrl: _movie!.images![index],
+                              );
+                            },
+                          ),
+                        ),
+                        //ShowMovieGalerie(movie: _movie!),
                         //MovieVideoList(movie: _movie!),
                       ],
                     ),
