@@ -76,9 +76,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 size: 20,
               ),
             )
-          : Column(
-              children: [
-                SizedBox(
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView(
+                children: [
+                  SizedBox(
                     height: 220,
                     width: MediaQuery.of(context).size.width,
                     child: _movie!.videos!.isEmpty
@@ -90,88 +92,81 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               ),
                             ),
                           )
-                        : MyVideoPlayer(movieId: _movie!.videos!.first.key)),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView(
-                      children: [
-                        // const SizedBox(
-                        //   height: 10,
-                        // ),
-                        MovieInfo(movie: _movie!),
-                        const SizedBox(height: 10),
-                        const ActionButton(
-                          bgColor: Colors.white,
-                          color: kBackgroundColor,
-                          icon: Icons.play_arrow,
-                          label: 'Lecture',
-                        ),
-                        const SizedBox(height: 10),
-                        ActionButton(
-                          bgColor: Colors.grey.withOpacity(0.3),
-                          color: Colors.white,
-                          icon: Icons.download,
-                          label: 'Télécharger la vidéo',
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          _movie!.description,
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Casting',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 350,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: _movie!.cast!.length,
-                              itemBuilder: (context, index) {
-                                return _movie!.cast![index].imageURL == null
-                                    ? const Center()
-                                    : CastingCard(person: _movie!.cast![index]);
-                              }),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Galérie',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 200,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: _movie!.images!.length,
-                            itemBuilder: (context, index) {
-                              return GalerieCard(
-                                imageUrl: _movie!.images![index],
-                              );
-                            },
-                          ),
-                        ),
-                        //ShowMovieGalerie(movie: _movie!),
-                        //MovieVideoList(movie: _movie!),
-                      ],
+                        : MyVideoPlayer(movieId: _movie!.videos!.first.key),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MovieInfo(movie: _movie!),
+                  const SizedBox(height: 10),
+                  const ActionButton(
+                    bgColor: Colors.white,
+                    color: kBackgroundColor,
+                    icon: Icons.play_arrow,
+                    label: 'Lecture',
+                  ),
+                  const SizedBox(height: 10),
+                  ActionButton(
+                    bgColor: Colors.grey.withOpacity(0.3),
+                    color: Colors.white,
+                    icon: Icons.download,
+                    label: 'Télécharger la vidéo',
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    _movie!.description,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 15,
                     ),
                   ),
-                )
-              ],
+                  const SizedBox(height: 20),
+                  Text(
+                    'Casting',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 350,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _movie!.cast!.length,
+                        itemBuilder: (context, index) {
+                          return _movie!.cast![index].imageURL == null
+                              ? const Center()
+                              : CastingCard(person: _movie!.cast![index]);
+                        }),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Galérie',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _movie!.images!.length,
+                      itemBuilder: (context, index) {
+                        return GalerieCard(
+                          imageUrl: _movie!.images![index],
+                        );
+                      },
+                    ),
+                  ),
+                  //ShowMovieGalerie(movie: _movie!),
+                  //MovieVideoList(movie: _movie!),
+                ],
+              ),
             ),
     );
   }

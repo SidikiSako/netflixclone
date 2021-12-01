@@ -62,12 +62,25 @@ class _RootState extends State<Root> {
     final indexProvider = Provider.of<IndexProvider>(context);
     return SafeArea(
       child: Scaffold(
-          backgroundColor: kBackgroundColor,
-          body: IndexedStack(
-            index: indexProvider.currentIndex,
-            children: screens,
-          ),
-          bottomNavigationBar: getBottomNavigationBar()),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: Image.asset('assets/images/netflix_logo_2.png'),
+          // title: Text(
+          //   'NotNetflix',
+          //   style: GoogleFonts.poppins(
+          //     color: kPrimaryColor,
+          //     fontWeight: FontWeight.bold,
+          //     fontSize: 18,
+          //   ),
+          // ),
+        ),
+        backgroundColor: kBackgroundColor,
+        body: IndexedStack(
+          index: indexProvider.currentIndex,
+          children: screens,
+        ),
+        //bottomNavigationBar: getBottomNavigationBar(),
+      ),
     );
   }
 }

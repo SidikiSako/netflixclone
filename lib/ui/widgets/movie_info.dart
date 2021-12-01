@@ -24,6 +24,7 @@ class MovieInfo extends StatelessWidget {
           children: [
             Text(
               'Genres : ',
+              overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
                 color: Colors.grey,
                 fontWeight: FontWeight.w500,
