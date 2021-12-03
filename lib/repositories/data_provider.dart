@@ -68,14 +68,15 @@ class DataProvider with ChangeNotifier {
 
   Future<Movie> getMovieDetails({required Movie movie}) async {
     try {
-      //on recupère les details
-      Movie newMovie = await apiService.getMovieDetails(movie: movie);
-      // on recupère les acteurs
-      newMovie = await apiService.getMovieCast(movie: newMovie);
-      // on recupère les videos
-      newMovie = await apiService.getMovieVideos(movie: newMovie);
-      // on recupère les photos
-      newMovie = await apiService.getMovieImages(movie: newMovie);
+      Movie newMovie = await apiService.getMovie(movie: movie);
+      // //on recupère les details
+      // Movie newMovie = await apiService.getMovieDetails(movie: movie);
+      // // on recupère les acteurs
+      // newMovie = await apiService.getMovieCast(movie: newMovie);
+      // // on recupère les videos
+      // newMovie = await apiService.getMovieVideos(movie: newMovie);
+      // // on recupère les photos
+      // newMovie = await apiService.getMovieImages(movie: newMovie);
       return newMovie;
     } on Response catch (response) {
       print("Error : ${response.statusCode}");

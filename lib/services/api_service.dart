@@ -66,76 +66,116 @@ class APIService {
     return reformatJsonList(response);
   }
 
-  Future<Movie> getMovieDetails({required Movie movie}) async {
-    Response response = await getData('/movie/${movie.id}');
+  // Future<Movie> getMovieDetails({required Movie movie}) async {
+  //   Response response = await getData('/movie/${movie.id}');
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> _data = response.data;
+  //     var genres = _data['genres'] as List;
+  //     List<String> genreList =
+  //         genres.map((item) => item['name'] as String).toList();
+  //     // Movie newMovie = movie.updateMovieDetails(_data);
+  //     Movie newMovie = movie.copyWith(
+  //       vote: _data['vote_average'],
+  //       releaseDate: _data['release_date'],
+  //       genres: genreList,
+  //     );
+
+  //     return newMovie;
+  //   } else {
+  //     throw response;
+  //   }
+  // }
+
+  // Future<Movie> getMovieCast({required Movie movie}) async {
+  //   Response response = await getData('/movie/${movie.id}/credits');
+  //   if (response.statusCode == 200) {
+  //     Map _data = response.data;
+
+  //     List<Person> casting = _data['cast'].map<Person>((personJson) {
+  //       return Person.fromJson(personJson);
+  //     }).toList();
+
+  //     return movie.copyWith(cast: casting);
+  //   } else {
+  //     throw response;
+  //   }
+  // }
+
+  // Future<Movie> getMovieImages({required Movie movie}) async {
+  //   Response response = await getData(
+  //     '/movie/${movie.id}/images',
+  //     params: {
+  //       'include_image_language': 'null',
+  //     },
+  //   );
+  //   if (response.statusCode == 200) {
+  //     //Map _data = response.data;
+
+  //     Map<String, dynamic> _data = response.data;
+  //     //print('data = $_data');
+  //     var images = _data['backdrops'] as List;
+  //     //print('images = $images');
+  //     List<String> urls =
+  //         images.map((item) => api.baseImageURL + item['file_path']).toList();
+  //     //print('IMAGE URLS = $urls');
+  //     return movie.copyWith(
+  //       images: urls,
+  //     );
+  //   } else {
+  //     throw response;
+  //   }
+  // }
+
+  // Future<Movie> getMovieVideos({required Movie movie}) async {
+  //   Response response = await getData('/movie/${movie.id}/videos');
+  //   if (response.statusCode == 200) {
+  //     Map _data = response.data;
+
+  //     List<Video> videos = _data['results'].map<Video>((videoJson) {
+  //       return Video.fromJson(videoJson);
+  //     }).toList();
+
+  //     return movie.copyWith(videos: videos);
+  //   } else {
+  //     throw response;
+  //   }
+  // }
+
+  Future<Movie> getMovie({required Movie movie}) async {
+    Response response = await getData('/movie/${movie.id}', params: {
+      'include_image_language': 'null',
+      'append_to_response': 'videos,images,credits'
+    });
     if (response.statusCode == 200) {
-      Map<String, dynamic> _data = response.data;
+      Map _data = response.data;
+      // on recupère les genres
       var genres = _data['genres'] as List;
       List<String> genreList =
           genres.map((item) => item['name'] as String).toList();
-      // Movie newMovie = movie.updateMovieDetails(_data);
-      Movie newMovie = movie.copyWith(
-        vote: _data['vote_average'],
-        releaseDate: _data['release_date'],
-        genres: genreList,
-      );
 
-      return newMovie;
-    } else {
-      throw response;
-    }
-  }
-
-  Future<Movie> getMovieCast({required Movie movie}) async {
-    Response response = await getData('/movie/${movie.id}/credits');
-    if (response.statusCode == 200) {
-      Map _data = response.data;
-
-      List<Person> casting = _data['cast'].map<Person>((personJson) {
+      // on recupère le casting
+      List<Person> casting = _data['credits']['cast'].map<Person>((personJson) {
         return Person.fromJson(personJson);
       }).toList();
 
-      return movie.copyWith(cast: casting);
-    } else {
-      throw response;
-    }
-  }
-
-  Future<Movie> getMovieImages({required Movie movie}) async {
-    Response response = await getData(
-      '/movie/${movie.id}/images',
-      params: {
-        'include_image_language': 'null',
-      },
-    );
-    if (response.statusCode == 200) {
-      //Map _data = response.data;
-
-      Map<String, dynamic> _data = response.data;
-      //print('data = $_data');
-      var images = _data['backdrops'] as List;
-      //print('images = $images');
-      List<String> urls =
-          images.map((item) => api.baseImageURL + item['file_path']).toList();
-      //print('IMAGE URLS = $urls');
-      return movie.copyWith(
-        images: urls,
-      );
-    } else {
-      throw response;
-    }
-  }
-
-  Future<Movie> getMovieVideos({required Movie movie}) async {
-    Response response = await getData('/movie/${movie.id}/videos');
-    if (response.statusCode == 200) {
-      Map _data = response.data;
-
-      List<Video> videos = _data['results'].map<Video>((videoJson) {
+      // on recupère la liste de vidéo
+      List<Video> videos = _data['videos']['results'].map<Video>((videoJson) {
         return Video.fromJson(videoJson);
       }).toList();
 
-      return movie.copyWith(videos: videos);
+      // on recupère les images
+      var images = _data['images']['backdrops'] as List;
+      //print('images = $images');
+      List<String> urls =
+          images.map((item) => api.baseImageURL + item['file_path']).toList();
+
+      return movie.copyWith(
+          genres: genreList,
+          cast: casting,
+          videos: videos,
+          images: urls,
+          vote: _data['vote_average'],
+          releaseDate: _data['release_date']);
     } else {
       throw response;
     }
